@@ -11,8 +11,8 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://troy.geodesic.net/mrc/";
-$config['base_path']    = "/var/www/html/mrc/";
+$config['base_url']	= "http://troy.geodesic.net/mrc_dev/deepak/";
+$config['base_path']    = "/var/www/html/mrc_dev/deepak/";
 
 /*
 |--------------------------------------------------------------------------

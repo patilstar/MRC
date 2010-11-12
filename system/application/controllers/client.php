@@ -51,6 +51,45 @@ class Client extends Controller {
 
 	}
 
+	function testcases()
+	{
+$this->load->library('user_agent');
+
+if ($this->agent->is_browser())
+{
+    $agent = $this->agent->browser().' '.$this->agent->version();
+}
+elseif ($this->agent->is_robot())
+{
+    $agent = $this->agent->robot();
+}
+elseif ($this->agent->is_mobile())
+{
+    $agent = $this->agent->mobile();
+}
+else
+{
+    $agent = 'Unidentified User Agent';
+}
+
+//echo $agent;
+
+//echo $this->agent->platform(); 
+//$msg = 'Welcome to Mundu Radio';//My secret message';
+$DATA = "c1f425d39394097257e7394740155c8c92d17faa2d6918";
+$EncData = substr($DATA, 0, strlen($DATA)-2);
+$RandomNo = substr($DATA, strlen($DATA)- 2, 2);
+$this->load->library('encrypt');
+$key = 'MUNDU:'.$RandomNo;//super-secret-key';
+$this->encrypt->set_key($key);
+echo "<hr>111--->".  $decryptData = $this->encrypt->encode_rc4($EncData);
+echo "<hr >";
+
+
+
+//		$this->load->view('testcases');
+	}
+
 }
 ?>
 

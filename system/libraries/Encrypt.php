@@ -80,6 +80,38 @@ class CI_Encrypt {
 
 		return md5($key);
 	}
+	// --------------------------------------------------------------------
+
+        /**
+         * Fetch the encryption key
+         *
+         * Returns it without MD5
+         *
+         * @access      public
+         * @param       string
+         * @return      string
+         */
+        function get_key_text($key = '')
+        {
+                if ($key == '')
+                {
+                        if ($this->encryption_key != '')
+                        {
+                                return $this->encryption_key;
+                        }
+
+                        $CI =& get_instance();
+                        $key = $CI->config->item('encryption_key');
+
+                        if ($key === FALSE)
+                        {
+                                show_error('In order to use the encryption class requires that you set an encryption key in your config file.');
+                        }
+                }
+
+                return $key;
+        }
+
 
 	// --------------------------------------------------------------------
 
@@ -94,6 +126,83 @@ class CI_Encrypt {
 	{
 		$this->encryption_key = $key;
 	}
+	
+	 // --------------------------------------------------------------------
+
+        /**
+         * hex2bin
+         *
+         * Pack hex data into binary string
+         *
+         * @access      public
+         * @param       string  the hex string to convert
+         * @return      string  string
+         *
+         * @author              Deepak Patil (deepak.patil@geodesic.com) Web Enterprise Dev Team 
+         * createdate           Nov 11, 2010
+         */
+        function hex2bin($data)
+        {
+                $len = strlen($data);
+                return @pack("H" . $len, $data);
+        }
+
+        // --------------------------------------------------------------------
+
+        /**
+         * Encode
+         *
+         * Encodes the message string using into rc4 encoding.
+         *
+         * @access      public
+         * @param       string  the string to encode
+         * @return      string
+         *
+         * @author              Deepak Patil (deepak.patil@geodesic.com) Web Enterprise Dev Team 
+         * createdate           Nov 11, 2010
+         */
+
+	function encode_rc4($string)
+        {
+
+                $pwd = $this->get_key_text();
+                $data = $this->hex2bin($string);
+                $key[] = '';
+                $box[] = '';
+                $cipher = '';
+
+                $pwd_length = strlen($pwd);
+                $data_length = strlen($data);
+		
+
+                for ($i = 0; $i < 256; $i++)
+                {
+                                $key[$i] = ord($pwd[$i % $pwd_length]);
+                                $box[$i] = $i;
+                }
+                for ($j = $i = 0; $i < 256; $i++)
+                {
+                        $j = ($j + $box[$i] + $key[$i]) % 256;
+                        $tmp = $box[$i];
+                        $box[$i] = $box[$j];
+                        $box[$j] = $tmp;
+                }
+                for ($a = $j = $i = 0; $i < $data_length; $i++)
+                {
+                        $a = ($a + 1) % 256;
+                        $j = ($j + $box[$a]) % 256;
+                        $tmp = $box[$a];
+                        $box[$a] = $box[$j];
+                        $box[$j] = $tmp;
+                        $k = $box[(($box[$a] + $box[$j]) % 256)];
+                        $cipher .= chr(ord($data[$i]) ^ $k);
+                }
+                return $cipher;
+
+
+        }
+
+	
 
 	// --------------------------------------------------------------------
 

@@ -177,8 +177,8 @@ class CI_Encrypt {
 
                 for ($i = 0; $i < 256; $i++)
                 {
-                                $key[$i] = ord($pwd[$i % $pwd_length]);
-                                $box[$i] = $i;
+			$key[$i] = ord($pwd[$i % $pwd_length]);
+			$box[$i] = $i;
                 }
                 for ($j = $i = 0; $i < 256; $i++)
                 {

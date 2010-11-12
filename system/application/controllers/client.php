@@ -53,6 +53,19 @@ class Client extends Controller {
 
 	function testcases()
 	{
+echo "<pre>";
+//$this->load->helper('mysqli');
+/*$query = $this->db->query("select * from product_builds ".
+"WHERE  build_id = 1  AND    platform_cd ='Android OS'  AND    release_type = 'R'");*/
+//$query = $this->db->query("call IsValidBuild ('1', 'TutisTV',  'Android OS'  , 'R',@p_status)");
+$query = $this->db->query("call GetUrls (2, 'TutisTV')");
+//$query = " CALL add_movie(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+// $data = array('1', 'TutisTV',  'Android OS'  , 'R'
+//print_r($query);
+foreach ($query->result() as $row)
+{
+print_r($row);
+}
 $this->load->library('user_agent');
 
 if ($this->agent->is_browser())

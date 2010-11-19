@@ -40,7 +40,7 @@
 |
 */
 
-$route['default_controller'] = "admin";
+$route['default_controller'] = "client";
 $route['scaffolding_trigger'] = "";
 
 

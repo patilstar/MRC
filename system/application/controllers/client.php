@@ -17,6 +17,8 @@ class Client extends Controller {
         function __construct()
         {
                parent::__construct();
+	       echo 1;
+	       exit;		
         }
         function index()
         {
@@ -24,6 +26,13 @@ class Client extends Controller {
         }
 	function register()
 	{
+//print_r($_SERVER['QUERY_STRING']);
+//$pp = $this->input->get("mobile");
+
+//print_r($pp);
+		$this->load->model('Auth_model');
+                $data['base_url'] = $this->config->item('base_url');
+                echo $this->Auth_model->addUser($this->uri->segment(3),$this->uri->segment(4),$this->uri->segment(5),$this->uri->segment(6),$this->uri->segment(9),$this->uri->segment(10));
 	
 
 	}

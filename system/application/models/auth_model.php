@@ -18,5 +18,13 @@ class Auth_model extends Model{
 	{
 		parent::Model();
 	}
+	 function addUser ($uid, $authusr, $prid, $lid, $dvci, $blid) {
+                if($uid == 9876543210){
+                        return "1";
+                }else{
+                        return "0";
+                }
+        }
+
 }
 ?>
